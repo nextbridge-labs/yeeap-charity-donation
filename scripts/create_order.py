@@ -17,7 +17,7 @@ from decimal import Decimal, ROUND_HALF_UP
 
 from file_utils import save_order
 
-DEFAULT_BASE_URL = "https://ap.yeepay.com/yeeap"
+DEFAULT_BASE_URL = "https://qaap.yeepay.com/yeeap"
 CREATE_ORDER_URL = os.environ.get("YEEAP_DEMO_BASE_URL", DEFAULT_BASE_URL).rstrip("/") + \
     "/api/charity-donation/create_order"
 
