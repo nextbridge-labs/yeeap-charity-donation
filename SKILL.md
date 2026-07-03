@@ -130,11 +130,21 @@ python3 scripts/service.py "<订单号>"
 
 - 提取 `PAY_STATUS: <值>` 并展示给用户。
   - `PAY_STATUS=SUCCESS`：继续提取 `CERT_STATUS` / `CERT_URL` / `PROJECT_TITLE` / `CHARITY_NAME` / `AMOUNT`。
-  - `PAY_STATUS=ERROR`：提取 `ERROR_INFO` 一并告知，**不得**继续后续逻辑。
+  - `PAY_STATUS=ERROR`：提取 `ERROR_INFO` 一并告知，然后按下方「失败重试规则」处理。
 - `CERT_STATUS=GENERATING` 表示证书生成中，接口已幂等，可稍后再次执行 `service.py` 重新获取。
 - `CERT_STATUS=SUCCESS` 时，将 `CERT_URL` 作为捐赠证书链接完整展示给用户（保留可点击的链接）。
 
 向用户报告：捐赠成功、捐赠项目与机构、捐赠金额、证书链接。
+
+### 3) 失败重试规则（重要）
+
+履约阶段（同步捐款记录 / 获取证书）失败时，**支付已经成功**，必须遵守以下规则，**严禁让用户重新付款**：
+
+- ✅ **允许重试**：用**同一个 `ORDER_NO`** 重新执行 `python3 scripts/service.py "<ORDER_NO>"`。后端已做幂等——首次同步成功后，重试只会重新拉取证书，不会重复同步捐款记录，也不会再扣钱包。
+- ❌ **禁止**：重新执行阶段一的 `create_order`，或重新调用 `yeeap-wallet` 支付——这会导致**重复扣款**。
+- 只有当「订单文件中不存在 `payCredential`」（即从未支付成功）时，才允许回到阶段二重新支付。
+
+**重试策略**：间隔 3~5 秒重跑 `service.py`，最多 3 次。仍失败时告知用户「支付已成功，证书生成异常，可稍后用同一订单号重试或联系客服」，并把 `ORDER_NO` 留给用户备查。**绝不能因履约失败就让用户重新付款。**
 
 ---
 
