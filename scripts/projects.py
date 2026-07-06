@@ -12,7 +12,7 @@ import sys
 import urllib.error
 import urllib.request
 
-DEFAULT_BASE_URL = "https://qaap.yeepay.com/yeeap"
+DEFAULT_BASE_URL = "https://ap.yeepay.com/yeeap"
 PROJECTS_URL = os.environ.get("YEEAP_DEMO_BASE_URL", DEFAULT_BASE_URL).rstrip("/") + \
     "/api/charity-donation/projects"
 
@@ -62,4 +62,5 @@ if __name__ == "__main__":
         print(f"PROJECT_{i}_COUNT={p.get('allCount')}")
         print(f"PROJECT_{i}_REGISTERED_NO={p.get('registeredNo')}")
         print(f"PROJECT_{i}_DETAIL={p.get('detailUrl')}")
+        print(f"PROJECT_{i}_DETAIL_QR={p.get('detailQr')}")
         print(f"PROJECT_{i}_MONTH={p.get('monthDonateFlag')}")
