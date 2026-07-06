@@ -43,7 +43,7 @@ python3 scripts/projects.py
 后端固定查询第 1 页、10 条、月捐标识 N、筹款状态 PROGRESS 的项目，不对外暴露查询参数。脚本会向标准输出打印：
 
 - `TOTAL=<项目总数>`
-- 每个项目一组：`PROJECT_<i>_ID` / `PROJECT_<i>_TITLE` / `PROJECT_<i>_DESC`（项目简介） / `PROJECT_<i>_COVER`（封面图 URL） / `PROJECT_<i>_CHARITY` / `PROJECT_<i>_AMOUNT`（已筹金额） / `PROJECT_<i>_COUNT`（已筹人次） / `PROJECT_<i>_REGISTERED_NO`（备案编号） / `PROJECT_<i>_DETAIL`（详情链接，用于生成二维码） / `PROJECT_<i>_DETAIL_QR`（详情链接二维码） / `PROJECT_<i>_MONTH`（月捐标识 Y/N）
+- 每个项目一组：`PROJECT_<i>_ID` / `PROJECT_<i>_TITLE` / `PROJECT_<i>_DESC`（项目简介） / `PROJECT_<i>_COVER`（封面图 URL） / `PROJECT_<i>_CHARITY` / `PROJECT_<i>_AMOUNT`（已筹金额） / `PROJECT_<i>_COUNT`（已筹人次） / `PROJECT_<i>_REGISTERED_NO`（备案编号） / `PROJECT_<i>_DETAIL`（详情链接，用于生成二维码） / `PROJECT_<i>_DETAIL_QR_URL`（详情链接二维码图片 URL） / `PROJECT_<i>_MONTH`（月捐标识 Y/N）<i>_CHARITY` / `PROJECT_<i>_AMOUNT`（已筹金额） / `PROJECT_<i>_COUNT`（已筹人次） / `PROJECT_<i>_REGISTERED_NO`（备案编号） / `PROJECT_<i>_DETAIL`（详情链接，用于生成二维码） / `PROJECT_<i>_DETAIL_QR`（详情链接二维码） / `PROJECT_<i>_MONTH`（月捐标识 Y/N）
 
 向用户展示项目列表，每个项目按以下要素渲染，请用户选择一个项目并输入**捐赠金额（单位：元）**。可选项：捐赠人姓名、昵称、留言、手机号、邮箱。
 
@@ -53,7 +53,7 @@ python3 scripts/projects.py
 - **机构名称**：`PROJECT_<i>_CHARITY`。
 - **已筹金额 / 已筹人次**：`PROJECT_<i>_AMOUNT`（单位元，已是元，按值展示，无需换算） / `PROJECT_<i>_COUNT`。
 - **备案编号**：`PROJECT_<i>_REGISTERED_NO`（民政备案编号，展示以增强公信力）。
-- **项目详情二维码**：`PROJECT_<i>_DETAIL_QR` 非空时，用 markdown 图片语法 `![项目详情二维码](<DETAIL_QR 值>)` 渲染二维码图片，引导用户**用手机扫码**在手机端打开项目详情页；**不要把详情链接作为电脑端可点击链接展示给用户**。`PROJECT_<i>_DETAIL`（原始链接）仅供后端生成二维码用，不直接展示。`DETAIL_QR` 为空则不展示二维码。
+- **项目详情二维码**：用 markdown 图片语法 `![项目详情二维码](<PROJECT_<i>_DETAIL_QR_URL>)` 渲染二维码图片（URL 指向后端图片接口，客户端按需拉取，不会把 base64 灌进上下文导致渲染慢），引导用户**用手机扫码**在手机端打开项目详情页；**不要把详情链接作为电脑端可点击链接展示给用户**。`PROJECT_<i>_DETAIL`（原始链接）仅供后端生成二维码用，不直接展示。
 
 推荐用表格或卡片式排版组织项目列表，让用户一目了然。
 
