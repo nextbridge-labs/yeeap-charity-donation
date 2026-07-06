@@ -62,5 +62,5 @@ if __name__ == "__main__":
         print(f"PROJECT_{i}_COUNT={p.get('allCount')}")
         print(f"PROJECT_{i}_REGISTERED_NO={p.get('registeredNo')}")
         print(f"PROJECT_{i}_DETAIL={p.get('detailUrl')}")
-        print(f"PROJECT_{i}_DETAIL_QR={p.get('detailQr')}")
+        print(f"PROJECT_{i}_DETAIL_QR_URL={PROJECTS_URL}/{p.get('id')}/qr")
         print(f"PROJECT_{i}_MONTH={p.get('monthDonateFlag')}")
